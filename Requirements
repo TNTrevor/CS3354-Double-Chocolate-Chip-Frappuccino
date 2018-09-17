@@ -15,8 +15,8 @@ Functional requirements
   2. The view event list fucntion shall allow the user to view all of their past, 
    present and future events.
    2.1 The app shall display events in chronological order with the newest being on top.
-   2.2 The app shall allow the user to specify the urgency of the 
-    event and move the most urgent events to the top of the list
+   2.2 The app shall allow the user to specify the urgency of the  event and move the 
+    most urgent events to the top of the list
     
 
 Use Case Diagram
