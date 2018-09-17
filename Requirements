@@ -3,9 +3,9 @@ for	UTD Plan It App
 
 Definitions, Acronyms, and Abbreviations
 
- | UTD         | The University of Texas at Dallas |
- | ----------- | --------------------------------- |
- | Plan It App | The name of the app               |
+ | UTD             | The University of Texas at Dallas |
+ | --------------- | --------------------------------- |
+ | UTD Plan It App | The name of the app               |
 
 Functional requirements
   1. The Add New Event function shall allow the user th add an event.
