@@ -9,7 +9,9 @@ Definitions, Acronyms, and Abbreviations
 
 Functional requirements
   1. The Add New Event function shall allow the user to add an event.
-    1.1 
+    1.1 The app shall require the following information from the user: Title,
+     location, start and end date.
+    1.2 The app shall allow the user to specify whether the event repeats of not.
     
 
 Use Case Diagram
