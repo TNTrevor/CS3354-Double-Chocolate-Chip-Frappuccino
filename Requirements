@@ -8,10 +8,15 @@ Definitions, Acronyms, and Abbreviations
  | UTD Plan It App | The name of the app               |
 
 Functional requirements
-  1. The Add New Event function shall allow the user to add an event.
+  1. The add new event function shall allow the user to add an event.
     1.1 The app shall require the following information from the user: Title,
      location, start and end date.
     1.2 The app shall allow the user to specify whether the event repeats or not.
+  2. The view event list fucntion shall allow the user to view all of their past, 
+   present and future events.
+   2.1 The app shall display events in chronological order with the newest being on top.
+   2.2 The app shall allow the user to specify the urgency of the 
+    event and move the most urgent events to the top of the list
     
 
 Use Case Diagram
