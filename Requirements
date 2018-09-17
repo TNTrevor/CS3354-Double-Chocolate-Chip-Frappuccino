@@ -1,11 +1,15 @@
 Software	Requirements	Specifications	(SRS)
 for	UTD Plan It App
+
+Definitions, Acronyms, and Abbreviations
+
 |UTD         |The University of Texas at Dallas|
 |------------|---------------------------------|
 |Plan It App |The name of the app              |
-Definitions, Acronyms, and Abbreviations
+
+Functional requirements
   1. The Add New Event function shall allow the user th add an event.
     1.1 
     
-Functional requirements
+
 Use Case Diagram
