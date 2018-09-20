@@ -28,6 +28,8 @@ Functional requirements
    2.5 The user should be able to select a list with the given tags in order to more easily find an event
  3. The remove event function should allow the user to remove events
    3.1 The app should require the user to select specifically what event they want to remove from the list
+   3.2 The user should be able to remove as much as they need depending on the information gathered by user: Title,
+   location, start date, end date, color code, and tags
 
     
 
