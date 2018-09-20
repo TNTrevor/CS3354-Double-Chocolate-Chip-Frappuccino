@@ -26,6 +26,7 @@ Functional requirements
    2.3 There should be an option to view your events by the month, week, or day.
    2.4 The user should be able to filter events by color
  3. The remove event function should allow the user to remove events
+   3.1 The app should require the user to select specifically what event they want to remove from the list
 
     
 
