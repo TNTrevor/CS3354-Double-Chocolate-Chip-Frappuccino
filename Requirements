@@ -16,6 +16,7 @@ Functional requirements
     1.4 The Event should check and inform the user if the event they are trying 
      to create has any conflicts with other events.
     1.5 The user shall be able to specify what time, and how frequently the app sends alerts for events
+    1.6 The user should be able to tag events in order to more easily view similar events with the same tag
   2. The view event list function shall allow the user to view all of their past, 
    present and future events.
    2.1 The app shall display events in chronological order with the newest placed
@@ -24,6 +25,7 @@ Functional requirements
     most urgent events to the top of the list
    2.3 There should be an option to view your events by the month, week, or day.
    2.4 The user should be able to filter events by color
+
     
 
 Use Case Diagram
