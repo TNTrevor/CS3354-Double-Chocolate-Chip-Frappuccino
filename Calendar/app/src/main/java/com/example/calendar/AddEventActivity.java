@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 public class AddEventActivity extends Activity {
+    EventDatabase eventdb;
+    EditText Title;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Title = findViewById(R.id.)
+
     }
 
     @Override
