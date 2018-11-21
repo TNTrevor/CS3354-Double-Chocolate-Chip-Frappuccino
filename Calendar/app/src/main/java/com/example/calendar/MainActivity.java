@@ -10,11 +10,11 @@ import android.view.*;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     CalendarView cale;
+    EventDatabase eventdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        eventdb = new EventDatabase(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cale = (CalendarView) findViewById(R.id.cale);
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("day", day);
                 intent.putExtra("month", inputMonth+1);
                 intent.putExtra("year", inputYear);
+                intent.putExtra("database", eventdb);
                 startActivity(intent);
             }
         });

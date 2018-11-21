@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
-public class AddEventActivity extends Activity {
-    EventDatabase eventdb;
+import java.io.Serializable;
+
+public class AddEventActivity extends Activity implements Serializable {
+
     EditText Title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Title = findViewById(R.id.)
 
     }
 
