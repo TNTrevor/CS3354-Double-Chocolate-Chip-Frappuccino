@@ -8,10 +8,12 @@ import android.widget.Toast;
 import android.widget.Button;
 import android.view.*;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
     CalendarView cale;
-    EventDatabase eventdb;
+    public static EventDatabase eventdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         eventdb = new EventDatabase(this);
@@ -21,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         cale.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getApplicationContext(),month+ "/"+ dayOfMonth + "/" + year, Toast.LENGTH_SHORT).show();
-                System.out.println("YR: " + year + "MN: " + month);
                 day = dayOfMonth;
                 inputMonth = month;
                 inputYear = year;
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("day", day);
                 intent.putExtra("month", inputMonth+1);
                 intent.putExtra("year", inputYear);
-                intent.putExtra("database", eventdb);
                 startActivity(intent);
             }
         });

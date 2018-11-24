@@ -7,30 +7,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Date;
 
 public class EventDatabase extends SQLiteOpenHelper implements Serializable {
     public static String DATABASE_NAME = "event_database";
-    private static int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 2;
     private static final String TABLE_EVENTS = "events";
     private static final String KEY_EVENTID = "eventid";
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_EVENTDATE = "eventdate";
+    private static final String KEY_EVENTTAG = "tag";
+    private static final String KEY_EVENTCOLOR = "color";
+    private static final String KEY_EVENTDETAILS = "details";
 
     private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " +
                                                         TABLE_EVENTS +
                                                         "(" +
                                                         KEY_ID +
                                                         " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                                        KEY_NAME +
+                                                        KEY_TITLE +
                                                         " TEXT," +
                                                         KEY_EVENTID +
-                                                        " INTEGER" +
+                                                        " INTEGER," +
+                                                        KEY_EVENTDATE +
+                                                        " TEXT," +
+                                                        KEY_EVENTTAG +
+                                                        " TEXT," +
+                                                        KEY_EVENTCOLOR +
+                                                        " TEXT," +
+                                                        KEY_EVENTDETAILS +
+                                                        " TEXT" +
                                                         ");";
 
-    //Default Constructor
+
+    //Constructor
     public EventDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -47,32 +57,36 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         onCreate(sqLiteDatabase);
     }
 
-    public long addEvent(String name, String eventID) {
+    public long addEvent(String name, String eventID, String eventDate, String tag, String details, String color) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(KEY_NAME, name);
+        cv.put(KEY_TITLE, name);
         cv.put(KEY_EVENTID, eventID);
+        cv.put(KEY_EVENTDATE, eventDate);
+        cv.put(KEY_EVENTTAG, tag);
+        cv.put(KEY_EVENTDETAILS, details);
+        cv.put(KEY_EVENTCOLOR, color);
+
 
         long insert = db.insert(TABLE_EVENTS, null, cv);
         return insert;
     }
 
-    public Hashtable<String, String> getEvent(String eventID) {
-        //Create a hash table with each of the items from the database
-        Hashtable<String, String> table = new Hashtable<String, String>();
+    public Cursor getEventForDate(String eventID) {
         String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTID + " = '" + eventID + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        //Check if we get a result
-        if (c.moveToFirst()) {
+        //Return the Cursor with all of the information
+        return c;
+    }
 
-            //Add all of the event data we need to the hash table
-            String name = c.getString(c.getColumnIndex(KEY_NAME));
-            System.out.println("NAME: " + name);
-            table.put(KEY_NAME, name);
-        }
-        //Return the table
-        return table;
+    public Cursor getEventForTime(String eventDate) {
+        //This will return a cursor with one row
+        String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        return c;
     }
 }
