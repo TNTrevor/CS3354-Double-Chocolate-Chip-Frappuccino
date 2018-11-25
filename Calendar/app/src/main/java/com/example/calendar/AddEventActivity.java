@@ -1,12 +1,14 @@
 package com.example.calendar;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -16,8 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddEventActivity extends Activity {
-
-    EditText Title;
     EventDatabase eventdb;
 
     @Override
@@ -25,18 +25,17 @@ public class AddEventActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
         eventdb = MainActivity.eventdb;
+        final EditText etTitle = findViewById(R.id.txtTitle);
+        final EditText etTag = findViewById(R.id.txtTag);
+        final EditText etDate = findViewById(R.id.txtDate);
+        final EditText etTime = findViewById(R.id.txtStart);
+        final EditText etDetails = findViewById(R.id.txtDetails);
+        final EditText etColor = findViewById(R.id.txtColor);
+
 
         final Button submitButton = findViewById(R.id.btnSubmit);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Check each required field for input. Don't store the info
-                EditText etTitle = findViewById(R.id.txtTitle);
-                EditText etTag = findViewById(R.id.txtTag);
-                EditText etDate = findViewById(R.id.txtDate);
-                EditText etTime = findViewById(R.id.txtStart);
-                EditText etDetails = findViewById(R.id.txtDetails);
-                EditText etColor = findViewById(R.id.txtColor);
-
                 System.out.println("Clicked!");
                 //Check for each important field
                 if (isEmpty(etTitle) || isEmpty(etDate) || isEmpty(etTime)) {
@@ -58,6 +57,18 @@ public class AddEventActivity extends Activity {
                     //System.out.println("ROWS INSERTED: " + l);
                 }
 
+            }
+        });
+
+        etTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        etTime.setText(hourOfDay + ":" + minutes);
+                    }
+                }, 0, 0, false);
+                timePickerDialog.show();
             }
         });
     }
