@@ -16,13 +16,13 @@ public class MainActivity extends AppCompatActivity {
     public static EventDatabase eventdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        eventdb = new EventDatabase(this);
+        eventdb = new EventDatabase(this); //Creates a new database in order to add to calendar
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); //Shows the layout for the main view of the Calendar View
         cale = (CalendarView) findViewById(R.id.cale);
         cale.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) { //
                 day = dayOfMonth;
                 inputMonth = month;
                 inputYear = year;
