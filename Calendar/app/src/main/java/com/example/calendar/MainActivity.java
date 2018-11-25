@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         cale = (CalendarView) findViewById(R.id.cale);
         cale.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) { //
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) { // Depending on the Selected day, The user can be able to add an event the database on that chosen date using the given information
                 day = dayOfMonth;
                 inputMonth = month;
                 inputYear = year;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        final Button plusButton = findViewById(R.id.addevent_btn);
+        final Button plusButton = findViewById(R.id.addevent_btn); //Allows user to press the plus button in order to add more events to the database
         plusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddEventActivity.class);

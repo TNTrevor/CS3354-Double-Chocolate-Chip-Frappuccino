@@ -20,7 +20,7 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
     private static final String KEY_EVENTCOLOR = "color";
     private static final String KEY_EVENTDETAILS = "details";
 
-    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " +
+    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " +   //allows user to add information toward a new event
                                                         TABLE_EVENTS +
                                                         "(" +
                                                         KEY_ID +
