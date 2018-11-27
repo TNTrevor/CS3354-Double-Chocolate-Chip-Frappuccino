@@ -8,17 +8,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.Serializable;
 
-public class EventDatabase extends SQLiteOpenHelper implements Serializable {
+public class EventDatabase extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "event_database";
-    private static int DATABASE_VERSION = 2;
+    private static int DATABASE_VERSION = 4;
     private static final String TABLE_EVENTS = "events";
     private static final String KEY_EVENTID = "eventid";
-    private static final String KEY_ID = "id";
+    private static final String KEY_ID = "_id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_EVENTDATE = "eventdate";
     private static final String KEY_EVENTTAG = "tag";
     private static final String KEY_EVENTCOLOR = "color";
     private static final String KEY_EVENTDETAILS = "details";
+    private static final String KEY_TIME = "time";
 
     private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " +   //allows user to add information toward a new event
                                                         TABLE_EVENTS +
@@ -36,6 +37,8 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
                                                         KEY_EVENTCOLOR +
                                                         " TEXT," +
                                                         KEY_EVENTDETAILS +
+                                                        " TEXT," +
+                                                        KEY_TIME +
                                                         " TEXT" +
                                                         ");";
 
@@ -57,7 +60,7 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         onCreate(sqLiteDatabase);
     }
 
-    public long addEvent(String title, String eventID, String eventDate, String tag, String details, String color) {
+    public long addEvent(String title, String eventID, String eventDate, String tag, String details, String color, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(KEY_TITLE, title);
@@ -66,6 +69,7 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         cv.put(KEY_EVENTTAG, tag);
         cv.put(KEY_EVENTDETAILS, details);
         cv.put(KEY_EVENTCOLOR, color);
+        cv.put(KEY_TIME, time);
 
 
         long insert = db.insert(TABLE_EVENTS, null, cv);
@@ -83,7 +87,7 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
     }
 
     public Cursor getEventForDate(String eventDate) {
-        String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "'";
+        String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "' ORDER BY " + KEY_EVENTID + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 

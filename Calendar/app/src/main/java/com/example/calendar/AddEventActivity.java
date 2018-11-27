@@ -25,7 +25,8 @@ public class AddEventActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
-        eventdb = MainActivity.eventdb;
+        eventdb = new EventDatabase(this);
+        eventdb.getWritableDatabase();
         final EditText etTitle = findViewById(R.id.txtTitle);
         final EditText etTag = findViewById(R.id.txtTag);
         final EditText etDate = findViewById(R.id.txtDate);
@@ -44,14 +45,21 @@ public class AddEventActivity extends Activity {
                 }
                 else {
                     //Create the correct event date format
-                    String date = etDate.getText().toString().replace("/", "-");
+                    String date = etDate.getText().toString();
+                    String []dateArr = date.split("/");
+                    String typedMonth = dateArr[0];
+                    String typedDay = dateArr[1];
+                    String typedYear = dateArr[2];
+
+                    date = typedYear + "-" + typedMonth + "-" + typedDay;
                     String timeEventID = date + "-" + etTime.getText().toString();
                     String title = etTitle.getText().toString();
-                    String tag= etTag.getText().toString();
+                    String tag = etTag.getText().toString();
                     String details = etDetails.getText().toString();
                     String color = etColor.getText().toString();
+                    String time = etTime.getText().toString();
 
-                    long l = eventdb.addEvent(title, timeEventID, date, tag, details, color);
+                    long l = eventdb.addEvent(title, timeEventID, date, tag, details, color, time);
                     System.out.println("ROWS INSERTED: " + l);
                     Cursor c = eventdb.getEventForDate(date);
                     c.moveToFirst();
@@ -85,9 +93,9 @@ public class AddEventActivity extends Activity {
         super.onStart();
 
         Intent intent = getIntent();
-        int selectedDay = intent.getIntExtra("day", 01);
-        int selectedYear = intent.getIntExtra("year", 2000);
-        int selectedMonth = intent.getIntExtra("month", 01);
+        selectedDay = intent.getIntExtra("day", 01);
+        selectedYear = intent.getIntExtra("year", 2000);
+        selectedMonth = intent.getIntExtra("month", 01);
         String autoFillDate = (selectedMonth + "/" + selectedDay + "/" + selectedYear);
         EditText dateText = findViewById(R.id.txtDate);
         dateText.setText(autoFillDate);
@@ -97,4 +105,7 @@ public class AddEventActivity extends Activity {
         return et.getText().toString().trim().length() == 0;
     }
 
+    private int selectedDay;
+    private int selectedYear;
+    private int selectedMonth;
 }
