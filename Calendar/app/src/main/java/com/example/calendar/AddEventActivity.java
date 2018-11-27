@@ -3,6 +3,7 @@ package com.example.calendar;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -43,32 +44,38 @@ public class AddEventActivity extends Activity {
                 }
                 else {
                     //Create the correct event date format
-                    String date = etDate.toString().replace("/", "-");
-                    String timeEventID = date + etTime.toString();
-                    DateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
-                    long Time = -1;
-                    try {
-                        Time = formatter.parse(etTime.toString()).getTime();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    String date = etDate.getText().toString().replace("/", "-");
+                    String timeEventID = date + "-" + etTime.getText().toString();
+                    String title = etTitle.getText().toString();
+                    String tag= etTag.getText().toString();
+                    String details = etDetails.getText().toString();
+                    String color = etColor.getText().toString();
+
+                    long l = eventdb.addEvent(title, timeEventID, date, tag, details, color);
+                    System.out.println("ROWS INSERTED: " + l);
+                    Cursor c = eventdb.getEventForDate(date);
+                    c.moveToFirst();
+                    for (int i = 0; i < c.getColumnCount() - 1; i++) {
+                        System.out.println("COL NAME: " + c.getColumnName(i));
+                        System.out.println("COL VAL: " + c.getString(i));
                     }
-                    System.out.println("TIME: " + Time);
-                    //long l = eventdb.addEvent(etTitle.toString(), date, timeEventID, etTag.toString(), etDetails.toString(), etColor.toString());
-                    //System.out.println("ROWS INSERTED: " + l);
                 }
 
             }
         });
 
-        etTime.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        etTime.setText(hourOfDay + ":" + minutes);
-                    }
-                }, 0, 0, false);
-                timePickerDialog.show();
+        etTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    final TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                            etTime.setText((hourOfDay % 12 == 0 ? 12 : hourOfDay % 12) + ":" + (minutes < 10 ? "0" + minutes : minutes) + (hourOfDay < 12 ? "AM" : "PM"));
+                        }
+                    }, 0, 0, false);
+                    timePickerDialog.show();
+                }
             }
         });
     }

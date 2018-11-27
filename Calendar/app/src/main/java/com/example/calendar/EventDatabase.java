@@ -57,10 +57,10 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         onCreate(sqLiteDatabase);
     }
 
-    public long addEvent(String name, String eventID, String eventDate, String tag, String details, String color) {
+    public long addEvent(String title, String eventID, String eventDate, String tag, String details, String color) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(KEY_TITLE, name);
+        cv.put(KEY_TITLE, title);
         cv.put(KEY_EVENTID, eventID);
         cv.put(KEY_EVENTDATE, eventDate);
         cv.put(KEY_EVENTTAG, tag);
@@ -72,7 +72,8 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         return insert;
     }
 
-    public Cursor getEventForDate(String eventID) {
+    public Cursor getEventForTime(String eventID) {
+        //This will return a cursor with one row
         String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTID + " = '" + eventID + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -81,8 +82,7 @@ public class EventDatabase extends SQLiteOpenHelper implements Serializable {
         return c;
     }
 
-    public Cursor getEventForTime(String eventDate) {
-        //This will return a cursor with one row
+    public Cursor getEventForDate(String eventDate) {
         String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
