@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class EventDatabase extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "event_database";
-    private static int DATABASE_VERSION = 4;
+    private static int DATABASE_VERSION = 9;
     private static final String TABLE_EVENTS = "events";
     private static final String KEY_EVENTID = "eventid";
     private static final String KEY_ID = "_id";
@@ -20,6 +20,7 @@ public class EventDatabase extends SQLiteOpenHelper {
     private static final String KEY_EVENTCOLOR = "color";
     private static final String KEY_EVENTDETAILS = "details";
     private static final String KEY_TIME = "time";
+    private static final String KEY_SORT = "sort";
 
     private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " +   //allows user to add information toward a new event
                                                         TABLE_EVENTS +
@@ -29,7 +30,7 @@ public class EventDatabase extends SQLiteOpenHelper {
                                                         KEY_TITLE +
                                                         " TEXT," +
                                                         KEY_EVENTID +
-                                                        " INTEGER," +
+                                                        " TEXT," +
                                                         KEY_EVENTDATE +
                                                         " TEXT," +
                                                         KEY_EVENTTAG +
@@ -39,7 +40,9 @@ public class EventDatabase extends SQLiteOpenHelper {
                                                         KEY_EVENTDETAILS +
                                                         " TEXT," +
                                                         KEY_TIME +
-                                                        " TEXT" +
+                                                        " TEXT," +
+                                                        KEY_SORT +
+                                                        " INTEGER" +
                                                         ");";
 
 
@@ -60,7 +63,7 @@ public class EventDatabase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public long addEvent(String title, String eventID, String eventDate, String tag, String details, String color, String time) {
+    public long addEvent(String title, String eventID, String eventDate, String tag, String details, String color, String time, int sort) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(KEY_TITLE, title);
@@ -70,6 +73,7 @@ public class EventDatabase extends SQLiteOpenHelper {
         cv.put(KEY_EVENTDETAILS, details);
         cv.put(KEY_EVENTCOLOR, color);
         cv.put(KEY_TIME, time);
+        cv.put(KEY_SORT, sort);
 
 
         long insert = db.insert(TABLE_EVENTS, null, cv);
@@ -87,10 +91,30 @@ public class EventDatabase extends SQLiteOpenHelper {
     }
 
     public Cursor getEventForDate(String eventDate) {
-        String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "' ORDER BY " + KEY_EVENTID + " ASC";
+        String selectQuery = "SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTDATE + " = '" + eventDate + "' ORDER BY " + KEY_SORT + " ASC" + "," + KEY_EVENTID + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
         return c;
+    }
+
+    public boolean deleteEventById(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_EVENTS, KEY_ID + "=" + id, null) > 0;
+    }
+
+    public boolean editEventById(int id, String title, String eventID, String eventDate, String tag, String details, String color, String time) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_TITLE, title);
+        cv.put(KEY_EVENTID, eventID);
+        cv.put(KEY_EVENTDATE, eventDate);
+        cv.put(KEY_EVENTTAG, tag);
+        cv.put(KEY_EVENTDETAILS, details);
+        cv.put(KEY_EVENTCOLOR, color);
+        cv.put(KEY_TIME, time);
+
+        return db.update(TABLE_EVENTS, cv, "_id="+id, null) > 0;
+
     }
 }

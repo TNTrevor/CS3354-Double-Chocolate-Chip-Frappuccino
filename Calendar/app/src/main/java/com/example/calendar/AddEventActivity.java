@@ -58,17 +58,12 @@ public class AddEventActivity extends Activity {
                     String details = etDetails.getText().toString();
                     String color = etColor.getText().toString();
                     String time = etTime.getText().toString();
-
-                    long l = eventdb.addEvent(title, timeEventID, date, tag, details, color, time);
-                    System.out.println("ROWS INSERTED: " + l);
-                    Cursor c = eventdb.getEventForDate(date);
-                    c.moveToFirst();
-                    for (int i = 0; i < c.getColumnCount() - 1; i++) {
-                        System.out.println("COL NAME: " + c.getColumnName(i));
-                        System.out.println("COL VAL: " + c.getString(i));
-                    }
+                    int sort = selectedSort;
+                    eventdb.addEvent(title, timeEventID, date, tag, details, color, time, sort);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Successfully added event", Toast.LENGTH_SHORT);
+                    toast.show();
+                    finish();
                 }
-
             }
         });
 
@@ -80,6 +75,8 @@ public class AddEventActivity extends Activity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                             etTime.setText((hourOfDay % 12 == 0 ? 12 : hourOfDay % 12) + ":" + (minutes < 10 ? "0" + minutes : minutes) + (hourOfDay < 12 ? "AM" : "PM"));
+
+                            selectedSort = (hourOfDay < 10 ? 1 : (hourOfDay <= 13 ? 2 : (hourOfDay < 22 ? 3 : (hourOfDay < 24 ? 4 : 5))));
                         }
                     }, 0, 0, false);
                     timePickerDialog.show();
@@ -108,4 +105,5 @@ public class AddEventActivity extends Activity {
     private int selectedDay;
     private int selectedYear;
     private int selectedMonth;
+    private int selectedSort;
 }
