@@ -179,7 +179,8 @@ public class EventDatabase extends SQLiteOpenHelper {
      * @param color This allows the user to choose a color to be more recognizable
      *              in both the list and calendar once added to database
      * @param time This allows user to insert a time for when the event is happening
-     * @return
+     * @return Allows the database to update information given by the user from editing
+     *         and therefore changes info given throughout the Calendar App
      */
     public boolean editEventById(int id, String title, String eventID, String eventDate, String tag, String details, String color, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
