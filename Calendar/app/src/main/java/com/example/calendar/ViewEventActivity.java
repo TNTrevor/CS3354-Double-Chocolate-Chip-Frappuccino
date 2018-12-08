@@ -19,10 +19,26 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+/**
+ * This file allows the user to view the events of the
+ * Calendar app. This goes through the database in order
+ * to grab the information so the user can change, save,
+ * edit, or delete a selected event
+ */
 public class ViewEventActivity extends Activity {
     EventDatabase eventdb;
 
     @Override
+    /**
+     * This creates the main layout of the view event/edit window
+     * and also prepare the database to read the already inputted
+     * information given through add event.
+     *
+     * @param savedInstanceState This allows the layout to become saved
+     *                           and show the user what they need to insert
+     *                           for viewing an activity
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event);
@@ -36,6 +52,9 @@ public class ViewEventActivity extends Activity {
     }
 
     @Override
+    /**
+     * Happens after onCreate where the user starts to go into the view event window
+     */
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
@@ -68,6 +87,16 @@ public class ViewEventActivity extends Activity {
 
 
         editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            /**
+             * This is the mainframe to the buttons which allow the user to
+             * save or delete any changes to the event selected.
+             *
+             * @param buttonView This enables or disables the buttons visibility on
+             *                   whether the user wants to make changes to the
+             *                   event
+             * @param isChecked This checker allows for the user to make changes
+             *                  to an event once that button or slider is checked
+             */
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     delButton.setVisibility(View.INVISIBLE);
@@ -84,12 +113,28 @@ public class ViewEventActivity extends Activity {
 
 
         delButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This allows the user to delete an event when they select
+             * the button/slider option in the edit window
+             *
+             * @param v References to View where the delete option is available
+             *          to the user
+             */
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Confirm");
                 builder.setMessage("Are you sure you want to delete?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    /**
+                     * Once the user clicks the confirmation for the deletion,
+                     * this code allows the database to remove the selected info
+                     * for the event
+                     *
+                     * @param dialog Confirms to the user that information is
+                     *               deleted from the database
+                     * @param which Compares values for verification
+                     */
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         if (eventdb.deleteEventById(eventID)) { //Delete the row in the database
@@ -105,6 +150,10 @@ public class ViewEventActivity extends Activity {
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
+                    /**
+                     * This executes if the user exits the deletion statement
+                     * where it will dismiss statement whether it clicks or declines
+                     */
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -116,6 +165,13 @@ public class ViewEventActivity extends Activity {
         });
 
         saveEditButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This searches the database for the edited values and
+             * saves the new values to the database
+             *
+             * @param v Reference to View as it shows the values of
+             *          the edited values
+             */
             public void onClick(View v) {
 
                 EditText etTitle = findViewById(R.id.txtDBTitle);
@@ -152,6 +208,13 @@ public class ViewEventActivity extends Activity {
                 builder.setTitle("Confirm");
                 builder.setMessage("Are you sure you want to edit?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    /**
+                     * This checks if the edit has been successful and to see if
+                     * the database has successfully added the edits in its system
+                     *
+                     * @param dialog This will dismiss the dialog that comes with succession
+                     * @param which Compares values for verification
+                     */
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         if (eventdb.editEventById(eventID, title, timeEventID, useDate, tag, details, color, time)) { //Delete the row in the database
@@ -167,6 +230,13 @@ public class ViewEventActivity extends Activity {
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
+                    /**
+                     * This activates when the edit has been made and the
+                     * button has been already pressed
+                     *
+                     * @param dialog This will dismiss the dialog that comes with succession
+                     * @param which Compares values for verification
+                     */
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -195,6 +265,12 @@ public class ViewEventActivity extends Activity {
     private String time;
     private String color;
 
+    /**
+     * This will allow all of the fields to be editable
+     *
+     * @param b checks if these values can be editable
+     *          by true or false
+     */
     private void MakeAllTextFieldsEditable(boolean b) {
         txtDBTitle.setEnabled(b);
         txtDBDetails.setEnabled(b);
@@ -204,6 +280,15 @@ public class ViewEventActivity extends Activity {
         txtDBColor.setEnabled(b);
     }
 
+    /**
+     * This allows the date to be formatted to look more
+     * coherent
+     *
+     * @param date Grabs the date information from the values given
+     * @param separator Basically seperates the date values to make
+     *                  it more coherent
+     * @return The final result for the formatted date
+     */
     private String formatDate(String date, String separator) {
         String []dateArr = date.split(separator);
         return dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
