@@ -30,7 +30,7 @@ public class AddEventActivity extends Activity {
         final EditText etTitle = findViewById(R.id.txtTitle);
         final EditText etTag = findViewById(R.id.txtTag);
         final EditText etDate = findViewById(R.id.txtDate);
-        final EditText etTime = findViewById(R.id.txtStart);
+        final EditText etTime = findViewById(R.id.txtStart);                    //creates a reference to the View for future use
         final EditText etDetails = findViewById(R.id.txtDetails);
         final EditText etColor = findViewById(R.id.txtColor);
 
@@ -51,7 +51,7 @@ public class AddEventActivity extends Activity {
                     String typedDay = dateArr[1];
                     String typedYear = dateArr[2];
 
-                    date = typedYear + "-" + typedMonth + "-" + typedDay;
+                    date = typedYear + "-" + typedMonth + "-" + typedDay;                       //gets the data from the fields and creates an event to be stored in the database
                     String timeEventID = date + "-" + etTime.getText().toString();
                     String title = etTitle.getText().toString();
                     String tag = etTag.getText().toString();

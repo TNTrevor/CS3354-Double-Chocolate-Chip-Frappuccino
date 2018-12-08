@@ -26,7 +26,7 @@ public class ViewEventActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event);
-        eventdb = new EventDatabase(this);
+        eventdb = new EventDatabase(this);                  //creates a reference to the View for future use
         delButton = findViewById(R.id.btnDelete);
         saveEditButton = findViewById(R.id.btnSaveEdit);
         editSwitch = findViewById(R.id.swEdit);
@@ -84,7 +84,7 @@ public class ViewEventActivity extends Activity {
 
 
         delButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v) {                   //sets what happens when you click the delete button
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Confirm");
@@ -116,7 +116,7 @@ public class ViewEventActivity extends Activity {
         });
 
         saveEditButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v) {               //sets what happens when you click the edit button
 
                 EditText etTitle = findViewById(R.id.txtDBTitle);
                 EditText etTag = findViewById(R.id.txtDBTag);
@@ -204,7 +204,7 @@ public class ViewEventActivity extends Activity {
         txtDBColor.setEnabled(b);
     }
 
-    public String formatDate(String date, String separator) {
+    public String formatDate(String date, String separator) {               //reformats the date
         String []dateArr = date.split(separator);
         return dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
     }
