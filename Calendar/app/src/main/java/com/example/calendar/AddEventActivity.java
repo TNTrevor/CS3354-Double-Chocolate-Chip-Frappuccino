@@ -18,10 +18,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This is the class which allows the user to add an event
+ * to the Calendar App. This includes the functionality of
+ * adding functionality for the UI and Database as well.
+ */
 public class AddEventActivity extends Activity {
     EventDatabase eventdb;
 
     @Override
+    /**
+     * Creates the UI and Database information as soon as
+     * this program is started
+     *
+     * @param savedInstanceState This allows the layout to become saved
+     *                           and show the user what they need to insert
+     *                           for adding an activity
+      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
@@ -69,6 +82,13 @@ public class AddEventActivity extends Activity {
 
         etTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
+            /**
+             * This allows the user to insert the time for the event.
+             * This will go into the event database
+             *
+             * @param v Shows the view for the time
+             * @param hasFocus A condition when the time should be chosen
+             */
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     final TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -86,6 +106,9 @@ public class AddEventActivity extends Activity {
     }
 
     @Override
+    /**
+     * Happens after onCreate where the user starts to go into the add event window
+      */
     protected void onStart() {
         super.onStart();
 
@@ -98,6 +121,13 @@ public class AddEventActivity extends Activity {
         dateText.setText(autoFillDate);
     }
 
+    /**
+     * This detects if the text fields are empty and also moves it to default
+     * if nothing is changed, submitted, or added
+     *
+     * @param et This will help with editing text to reset to default
+     * @return this returns all the values to become empty
+     */
     private boolean isEmpty(EditText et) {
         return et.getText().toString().trim().length() == 0;
     }
