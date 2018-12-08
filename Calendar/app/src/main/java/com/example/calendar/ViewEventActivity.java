@@ -205,7 +205,7 @@ public class ViewEventActivity extends Activity {
     }
 
     private String formatDate(String date, String separator) {
-        String []dateArr = date.split(separator);
+        String []dateArr = date.split(separator, 2);
         return dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
     }
 }

@@ -1,3 +1,3 @@
-(i)  The design pattern used was:
-(ii) The location of the test classes: 
-(iii)Instructions to build the app:
+(i)  The design pattern used was: Design by proxy: by not editing the original data at once and reupdating the database at the same time we reduce the risk of false information being recorded.
+(ii) The location of the test classes: CS3354-Double-Chocolate-Chip-Frappuccino\Calendar\app\src\test\java\com\example\calendar
+(iii)Instructions to build the app: There are no special instructions required to launch our app
