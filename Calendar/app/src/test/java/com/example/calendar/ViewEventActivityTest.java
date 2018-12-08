@@ -18,7 +18,7 @@ public class ViewEventActivityTest {
     public void formatDate() {
         String input = "11@02@1995";
         String output;
-        String expected = "11/02/1995";
+        String expected = "02/1995/11";
 
         ViewEventActivity view = new ViewEventActivity();
         output = view.formatDate(input, "@");
