@@ -204,7 +204,7 @@ public class ViewEventActivity extends Activity {
         txtDBColor.setEnabled(b);
     }
 
-    private String formatDate(String date, String separator) {
+    public String formatDate(String date, String separator) {
         String []dateArr = date.split(separator);
         return dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
     }
